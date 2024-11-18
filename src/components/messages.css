@@ -1,0 +1,144 @@
+/* Global styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f7f6;
+}
+
+.messages-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f7f6;
+}
+
+/* Layout */
+.user-list {
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.user-list h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.user-list-item {
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.user-list-item:hover {
+  background-color: #0078d4;
+  color: #fff;
+}
+
+.user-list-item p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.messages-container-right {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.message-list {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.message-list h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.message-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.message-list li {
+  margin-bottom: 15px;
+}
+
+.message-list li p {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.message-list li .sender {
+  font-weight: bold;
+}
+
+.message-list li .timestamp {
+  font-size: 12px;
+  color: #888;
+}
+
+.message-form {
+  padding: 20px;
+  background-color: #f1f1f1;
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.message-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.message-form button {
+  padding: 10px 20px;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.message-form button:hover {
+  background-color: #005c99;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+  .messages-container {
+    flex-direction: column;
+  }
+
+  .user-list {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .messages-container-right {
+    width: 100%;
+  }
+}
