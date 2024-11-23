@@ -3,7 +3,7 @@ import { sql } from "@vercel/postgres";
 
 const redis = Redis.fromEnv();
 
-// Function to get the connected user from Redis based on the token
+// Function to get the currently connected user from Redis based on the token
 export async function getConnectedUser(request) {
     let token = new Headers(request.headers).get('Authorization'); // Use 'Authorization' header
     if (!token) {
@@ -40,7 +40,7 @@ export function unauthorizedResponse() {
     });
 }
 
-// Handler to fetch users after verifying session
+// Handler for the rooms API endpoint
 export const config = {
   runtime: "edge",
 };
@@ -48,37 +48,35 @@ export const config = {
 export default async function handler(request) {
   try {
     // Check if the user is connected (valid session)
-    const connectedUser = await getConnectedUser(request);
-    if (!connectedUser) {
-      console.log("Not connected");
+    const connected = await checkSession(request);
+    if (!connected) {
+      console.log("User not connected");
       return unauthorizedResponse();
     }
 
-    // Fetch the list of users from the database, excluding the connected user
+    // Fetch the list of rooms from the database
     const { rowCount, rows } = await sql`
-      SELECT user_id, username, TO_CHAR(last_login, 'DD/MM/YYYY HH24:MI') AS last_login
-      FROM users
-      WHERE username != ${connectedUser.username}
-      ORDER BY last_login DESC
-    `;
-    console.log(`Got ${rowCount} users (excluding connected user)`);
+      SELECT room_id, name, TO_CHAR(created_on, 'DD/MM/YYYY HH24:MI') AS created_on
+      FROM rooms
+      ORDER BY created_on ASC`;
+
+    console.log("Got " + rowCount + " rooms");
 
     if (rowCount === 0) {
-      // No users found, return an empty array
+      // No rooms found, return an empty array
       return new Response("[]", {
         status: 200,
         headers: { "content-type": "application/json" },
       });
     } else {
-      // Return the filtered list of users as JSON
+      // Return the rooms as a JSON response
       return new Response(JSON.stringify(rows), {
         status: 200,
         headers: { "content-type": "application/json" },
       });
     }
   } catch (error) {
-    // Error handling
-    console.error("Error fetching users:", error);
+    console.error("Error fetching rooms:", error);
     return new Response(JSON.stringify(error), {
       status: 500,
       headers: { "content-type": "application/json" },
