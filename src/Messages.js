@@ -94,27 +94,29 @@ const Messages = () => {
         display: 'flex',
         marginTop: '20px',
         height: '100vh',
-        backgroundColor: '#f4f6f8',
-        borderRadius: '8px',
-        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-        animation: 'fadeIn 0.6s ease-in-out',
+        backgroundColor: 'linear-gradient(135deg, #e3f2fd, #90caf9)', // Dégradé bleu clair
+        borderRadius: '10px',
+        overflow: 'hidden',
+        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
       }}
     >
+      {/* Sidebar */}
       <Box
         sx={{
-          width: '25%',
-          paddingRight: 2,
+          width: '30%',
+          backgroundColor: '#ffffff', // Blanc pour les utilisateurs/salons
           borderRight: '1px solid #ddd',
-          backgroundColor: '#fff',
-          borderRadius: '8px',
           padding: '20px',
-          transition: 'all 0.3s ease',
-          ':hover': {
-            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
-          },
         }}
       >
-        <Typography variant="h6" sx={{ marginBottom: 2, color: '#1976d2', fontWeight: 'bold' }}>
+        <Typography
+          variant="h6"
+          sx={{
+            marginBottom: 2,
+            color: '#1976d2', // Bleu pour le texte
+            fontWeight: 'bold',
+          }}
+        >
           Utilisateurs
         </Typography>
         {loadingUsers ? (
@@ -129,7 +131,14 @@ const Messages = () => {
 
         <Divider sx={{ my: 2 }} />
 
-        <Typography variant="h6" sx={{ marginBottom: 2, color: '#1976d2', fontWeight: 'bold' }}>
+        <Typography
+          variant="h6"
+          sx={{
+            marginBottom: 2,
+            color: '#1976d2',
+            fontWeight: 'bold',
+          }}
+        >
           Salons
         </Typography>
         {loadingRooms ? (
@@ -143,15 +152,15 @@ const Messages = () => {
         )}
       </Box>
 
+      {/* Main Chat Area */}
       <Box
         sx={{
           flex: 1,
-          marginLeft: 2,
-          backgroundColor: '#fff',
-          borderRadius: '8px',
           padding: '20px',
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-          animation: 'slideIn 0.7s ease-in-out',
+          background: 'linear-gradient(135deg, #90caf9, #42a5f5)', // Dégradé bleu pour l'espace de chat
+          display: 'flex',
+          flexDirection: 'column',
+          borderRadius: '0 10px 10px 0',
         }}
       >
         <Outlet />
