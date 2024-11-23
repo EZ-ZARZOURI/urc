@@ -1,41 +1,57 @@
-// src/api/register.js
-import { db } from '@vercel/postgres';
 import { Redis } from '@upstash/redis';
-import { arrayBufferToBase64, stringToArrayBuffer } from "../lib/base64";
 
-export const config = { runtime: 'edge' };
 const redis = Redis.fromEnv();
 
+export const config = { runtime: 'edge' };
+
 export default async function handler(request) {
-    if (request.method !== 'POST') {
-        return new Response(JSON.stringify({ message: 'Méthode non autorisée' }), {
-            status: 405,
-            headers: { 'content-type': 'application/json' },
-        });
-    }
+  const token = request.headers.get('Authorization')?.replace("Bearer ", "").trim();
 
+  // Vérifier l'authentification
+  if (!token || !(await redis.get(token))) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const { username } = JSON.parse(await redis.get(token));
+
+  if (request.method === 'POST') {
     try {
-        const { username, email, password } = await request.json();
-        if (!username || !email || !password) {
-            return new Response(JSON.stringify({ message: "Champs requis" }), { status: 400 });
-        }
+      const { recipient, content } = await request.json();
 
-        const hash = await crypto.subtle.digest('SHA-256', stringToArrayBuffer(username + password));
-        const hashedPassword = arrayBufferToBase64(hash);
-        const externalId = crypto.randomUUID();
-        const client = await db.connect();
+      if (!recipient || !content) {
+        return new Response("Recipient and content are required", { status: 400 });
+      }
 
-        const result = await client.sql`
-            INSERT INTO users (username, email, password, created_on, external_id) 
-            VALUES (${username}, ${email}, ${hashedPassword}, NOW(), ${externalId})
-            RETURNING user_id, username, email, external_id
-        `;
-        const newUser = result.rows[0];
-        const token = crypto.randomUUID();
-        await redis.set(token, { id: newUser.user_id, username: newUser.username, email: newUser.email, externalId: newUser.external_id }, { ex: 3600 });
+      const conversationKey = `conversation:${[username, recipient].sort().join(':')}`;
+      await redis.lpush(conversationKey, JSON.stringify({
+        sender: username,
+        content,
+        timestamp: new Date().toISOString(),
+      }));
 
-        return new Response(JSON.stringify({ message: 'Utilisateur créé', token, user: newUser }), { status: 201 });
+      return new Response("Message sent", { status: 200 });
     } catch (error) {
-        return new Response(JSON.stringify({ message: 'Erreur d’inscription' }), { status: 500 });
+      return new Response("Internal Server Error", { status: 500 });
     }
+  }
+
+  if (request.method === 'GET') {
+    try {
+      const url = new URL(request.url);
+      const recipient = url.searchParams.get('recipient');
+
+      if (!recipient) {
+        return new Response("Recipient is required", { status: 400 });
+      }
+
+      const conversationKey = `conversation:${[username, recipient].sort().join(':')}`;
+      const messages = await redis.lrange(conversationKey, 0, -1);
+
+      return new Response(JSON.stringify(messages.reverse().map(JSON.parse)), { status: 200 });
+    } catch (error) {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  }
+
+  return new Response("Method Not Allowed", { status: 405 });
 }
