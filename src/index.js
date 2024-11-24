@@ -8,7 +8,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Provider } from 'react-redux'; 
 import store from './store'; 
 
-const theme = createTheme(); // Créez un thème MUI par défaut
+const theme = createTheme(); 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

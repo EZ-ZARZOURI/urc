@@ -94,7 +94,7 @@ const Messages = () => {
         display: 'flex',
         marginTop: '20px',
         height: '100vh',
-        backgroundColor: 'linear-gradient(135deg, #e3f2fd, #90caf9)', // Dégradé bleu clair
+        backgroundColor: 'linear-gradient(135deg, #e3f2fd, #90caf9)', 
         borderRadius: '10px',
         overflow: 'hidden',
         boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
@@ -104,7 +104,7 @@ const Messages = () => {
       <Box
         sx={{
           width: '30%',
-          backgroundColor: '#ffffff', // Blanc pour les utilisateurs/salons
+          backgroundColor: '#ffffff', 
           borderRight: '1px solid #ddd',
           padding: '20px',
         }}
@@ -113,7 +113,7 @@ const Messages = () => {
           variant="h6"
           sx={{
             marginBottom: 2,
-            color: '#1976d2', // Bleu pour le texte
+            color: '#1976d2', 
             fontWeight: 'bold',
           }}
         >
@@ -157,7 +157,7 @@ const Messages = () => {
         sx={{
           flex: 1,
           padding: '20px',
-          background: 'linear-gradient(135deg, #90caf9, #42a5f5)', // Dégradé bleu pour l'espace de chat
+          background: 'linear-gradient(135deg, #90caf9, #42a5f5)', 
           display: 'flex',
           flexDirection: 'column',
           borderRadius: '0 10px 10px 0',

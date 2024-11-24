@@ -118,7 +118,7 @@ const RoomConversation = () => {
               padding: "16px",
               marginBottom: "16px",
               backgroundColor: "#fff",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Ombre douce pour un look moderne
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", 
             }}
           >
             {loading ? (
