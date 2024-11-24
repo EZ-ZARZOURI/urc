@@ -106,21 +106,7 @@ const RoomConversation = () => {
         </Typography>
       ) : (
         <>
-          {/* En-tête du salon */}
-          <Box
-            sx={{
-              padding: "10px 20px",
-              borderRadius: "8px",
-              background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)", // Ajout du dégradé ici
-              color: "#fff",
-              marginBottom: 2,
-              textAlign: "center",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-              animation: "fadeIn 0.6s ease-in-out",
-            }}
-          >
-            <Typography variant="h6">Salon : {id}</Typography>
-          </Box>
+
 
           {/* Liste des messages défilables */}
           <Box
@@ -235,28 +221,32 @@ const RoomConversation = () => {
                 },
               }}
             />
-            <Button
-              variant="contained"
-              onClick={handleSendMessage}
-              sx={{
-                background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)", // Ajout du dégradé
-                color: "#fff",
-                fontWeight: "bold",
-                fontSize: "0.9rem",
-                textTransform: "uppercase",
-                padding: "10px 20px",
-                borderRadius: "20px",
-                boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.2)",
-                transition: "all 0.3s ease",
-                ":hover": {
-                  background: "linear-gradient(90deg, #2575fc 0%, #6a11cb 100%)", // Inversion du dégradé au survol
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-                },
-              }}
-              disabled={!newMessage.trim()}
-            >
-              Envoyer
-            </Button>
+<Button
+  variant="contained"
+  onClick={handleSendMessage}
+  sx={{
+    background: "linear-gradient(90deg, #007bff, #1e90ff)", 
+    color: "#fff",                
+    padding: "10px 20px",         
+    borderRadius: "25px",         
+    fontSize: "1rem",             
+    fontWeight: "bold",           
+    textTransform: "none",        
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", 
+    transition: "background 0.3s, box-shadow 0.3s ease", 
+    ":hover": {
+      background: "linear-gradient(90deg, #0056b3, #007bff)", 
+      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)", 
+    },
+    ":active": {
+      transform: "scale(0.98)", 
+    },
+  }}
+  disabled={!newMessage.trim()}
+>
+  Envoyer
+</Button>
+
           </Box>
         </>
       )}

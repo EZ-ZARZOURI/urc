@@ -223,21 +223,21 @@ const Conversation = () => {
   variant="contained"
   onClick={handleSendMessage}
   sx={{
-    background: "linear-gradient(90deg, #007bff, #1e90ff)", // Dégradé bleu
-    color: "#fff",                // Couleur du texte
-    padding: "10px 20px",         // Espacement
-    borderRadius: "25px",         // Forme arrondie
-    fontSize: "1rem",             // Taille du texte
-    fontWeight: "bold",           // Poids du texte
-    textTransform: "none",        // Pas de transformation du texte
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", // Ombre douce
-    transition: "background 0.3s, box-shadow 0.3s ease", // Effet de transition
+    background: "linear-gradient(90deg, #007bff, #1e90ff)", 
+    color: "#fff",               
+    padding: "10px 20px",         
+    borderRadius: "25px",         
+    fontSize: "1rem",           
+    fontWeight: "bold",          
+    textTransform: "none",        
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+    transition: "background 0.3s, box-shadow 0.3s ease", 
     ":hover": {
-      background: "linear-gradient(90deg, #0056b3, #007bff)", // Dégradé bleu foncé
-      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)", // Ombre renforcée au survol
+      background: "linear-gradient(90deg, #0056b3, #007bff)", 
+      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)", 
     },
     ":active": {
-      transform: "scale(0.98)", // Effet de clic
+      transform: "scale(0.98)", 
     },
   }}
   disabled={!newMessage.trim()}
